@@ -6,6 +6,7 @@
             <a href="/my_shortlinks" class="list-group-item list-group-item-action {% if request.path == '/my_shortlinks' %}active{% endif %}">My Shortlinks</a>
             {% if current_user.is_premium == 0 %}
                 <a href="/upgrade" class="list-group-item list-group-item-action {% if request.path == '/upgrade' %}active{% endif %}">Upgrade to Premium</a>
+                <a href="/featurerequest" class="list-group-item list-group-item-action {% if request.path == '/featurerequest' %}active{% endif %}">Report a Bug or Request a Feature</a>
             {% endif %}
             <a href="/logout" class="list-group-item list-group-item-action">Logout</a>
         {% else %}

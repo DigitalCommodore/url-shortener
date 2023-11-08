@@ -283,6 +283,11 @@ def cancelled():
     return redirect(url_for('home'))
 
 
+@app.route('/featurerequest')
+def feature_request():
+    return render_template('want_a_feature.html')
+
+
 class User(UserMixin):
     def __init__(self, id, username, password, email, is_premium):
         self.id = id
