@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import string
 import random
+import validators
 
 app = Flask(__name__)
 app.secret_key = '1234'
@@ -86,14 +87,34 @@ def get_long_url(short_url):
     return row[0] if row else None
 
 
+def validate_url(url):
+    """
+    Validates the given URL.
+
+    :param url: The URL string to validate.
+    :return: True if the URL is valid, False otherwise.
+    """
+    valid = validators.url(url)
+    return True if valid else False
+
+
 @app.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
     if request.method == 'POST':
         original_url = request.form.get('url')
-        user_id = current_user.get_id()  # This assumes you have a get_id method in your user model
+        confirmed = request.form.get('confirmed')  # This is the new hidden input from the form
+
+        # If the URL is invalid and not confirmed by the user, flash the message and render the template
+        if not validate_url(original_url) and not confirmed:
+            flash('Invalid URL. Please enter a valid URL.', 'danger')
+            return render_template('home.html')
+
+        # If the URL is invalid but confirmed by the user, or if it's valid, process it
+        user_id = current_user.get_id()
         short_url = insert_url_mapping(original_url, user_id)
         return render_template('home.html', short_url=short_url, long_url=original_url)
+
     return render_template('home.html')
 
 
