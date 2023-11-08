@@ -171,7 +171,7 @@ def login():
         conn.close()
 
         if user and check_password_hash(user[2], password):
-            user_obj = User(user[0], user[1], user[2], user[3])
+            user_obj = User(user[0], user[1], user[2], user[3], user[4])
             login_user(user_obj)
             return redirect(url_for('home'))  # Redirect to the main page after login
 
@@ -241,11 +241,12 @@ def cancelled():
     return redirect(url_for('home'))
 
 class User(UserMixin):
-    def __init__(self, id, username, password, email):
+    def __init__(self, id, username, password, email, is_premium):
         self.id = id
         self.username = username
         self.password = password
         self.email = email
+        self.is_premium = is_premium
 
 
 
@@ -258,7 +259,7 @@ def load_user(user_id):
     user = c.fetchone()
     conn.close()
     if user:
-        return User(str(user['id']), user['username'], user['password'], user['email'])
+        return User(str(user['id']), user['username'], user['password'], user['email'], user['is_premium'])
     return None
 
 if __name__ == '__main__':
