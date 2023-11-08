@@ -218,6 +218,16 @@ def create_checkout_session():
 
 @app.route('/success')
 def success():
+    user_id = current_user.get_id()
+    conn = sqlite3.connect(db_filename)
+    c = conn.cursor()
+
+    # Update the user's premium status
+    c.execute('UPDATE users SET is_premium = 1 WHERE id = ?', (user_id,))
+
+    conn.commit()
+    conn.close()
+
     # Flash a success message
     flash('Congratulations, you have been upgraded to premium!', 'success')
 

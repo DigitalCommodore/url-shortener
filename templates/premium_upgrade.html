@@ -9,9 +9,25 @@
     <!-- Optional custom CSS here -->
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 bg-light">
+                <div class="list-group">
+                    <a href="/" class="list-group-item list-group-item-action">Home</a>
+                    {% if current_user.is_authenticated %}
+                        <a href="/my_shortlinks" class="list-group-item list-group-item-action">My Shortlinks</a>
+                        <a href="/upgrade" class="list-group-item list-group-item-action active">Upgrade to Premium</a>
+                        <a href="/logout" class="list-group-item list-group-item-action">Logout</a>
+                    {% else %}
+                        <a href="/login" class="list-group-item list-group-item-action">Login</a>
+                        <a href="/register" class="list-group-item list-group-item-action">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9">
                 <div class="text-center mb-4">
                     <h2>Upgrade to Premium</h2>
                     <p class="lead">Unlock exclusive features and enhance your experience.</p>

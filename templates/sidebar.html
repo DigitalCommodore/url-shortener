@@ -1,0 +1,14 @@
+<!-- Sidebar -->
+<div class="col-md-3 bg-light">
+    <div class="list-group">
+        <a href="/" class="list-group-item list-group-item-action {% if request.path == '/' %}active{% endif %}">Home</a>
+        {% if current_user.is_authenticated %}
+            <a href="/my_shortlinks" class="list-group-item list-group-item-action {% if request.path == '/my_shortlinks' %}active{% endif %}">My Shortlinks</a>
+            <a href="/upgrade" class="list-group-item list-group-item-action {% if request.path == '/upgrade' %}active{% endif %}">Upgrade to Premium</a>
+            <a href="/logout" class="list-group-item list-group-item-action">Logout</a>
+        {% else %}
+            <a href="/login" class="list-group-item list-group-item-action {% if request.path == '/login' %}active{% endif %}">Login</a>
+            <a href="/register" class="list-group-item list-group-item-action {% if request.path == '/register' %}active{% endif %}">Register</a>
+        {% endif %}
+    </div>
+</div>
