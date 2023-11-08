@@ -1,6 +1,7 @@
 import stripe
 from flask import Flask, request, redirect, render_template, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask_paginate import Pagination, get_page_args
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import string
@@ -118,17 +119,32 @@ def redirect_to_long_url(short_url):
 @login_required
 def my_shortlinks():
     user_id = current_user.get_id()
+    is_premium = current_user.is_premium
+
+    # Set the number of shortlinks per page
+    per_page = 20 if is_premium else 5
+    page, _, _ = get_page_args(page_parameter='page', per_page_parameter='per_page')
+
     conn = sqlite3.connect(db_filename)
     conn.row_factory = sqlite3.Row
     c = conn.cursor()
-    c.execute("SELECT * FROM short_urls WHERE user_id = ?", (user_id,))
-    shortlinks = [{
-        'short_url': row['short_url'],
-        'long_url': row['long_url'],
-        'click_count': row['click_count']
-    } for row in c.fetchall()]
+
+    # Count the total number of shortlinks for the user
+    c.execute("SELECT COUNT(id) FROM short_urls WHERE user_id = ?", (user_id,))
+    total = c.fetchone()[0]
+
+    # Calculate the offset for the current page
+    offset = (page - 1) * per_page
+
+    # Retrieve the shortlinks for the current page
+    c.execute("SELECT * FROM short_urls WHERE user_id = ? ORDER BY id DESC LIMIT ? OFFSET ?", (user_id, per_page, offset))
+    shortlinks = c.fetchall()
     conn.close()
-    return render_template('my_shortlinks.html', shortlinks=shortlinks)
+
+    # Setup pagination
+    pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap4')
+
+    return render_template('my_shortlinks.html', shortlinks=shortlinks, pagination=pagination, is_premium=is_premium)
 
 
 @app.route('/upgrade')
