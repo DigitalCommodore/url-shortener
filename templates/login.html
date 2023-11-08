@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Title and description -->
+        <div class="py-5 text-center">
+            <h2>Welcome to QuickLink URL Shortener</h2>
+            <p class="lead">QuickLink makes your long URLs shorter, making them easier to share and manage. Short links can be used for tracking how many times a link has been clicked, making them perfect for marketers and content creators who want to track engagement.</p>
+        </div>
+
+        <!-- Login form -->
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card my-5">
+                    <div class="card-header">
+                        <h4>Login to Your Account</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if error %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endif %}
+                        <form method="POST" action="/login">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </form>
+                    </div>
+                </div>
+                <p>Don't have an account? <a href="/register">Register here</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

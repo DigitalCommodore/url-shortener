@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upgrade to Premium</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Optional custom CSS here -->
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="text-center mb-4">
+                    <h2>Upgrade to Premium</h2>
+                    <p class="lead">Unlock exclusive features and enhance your experience.</p>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h4 class="card-title">Premium Benefits</h4>
+                        <p class="card-text"></p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Custom Short URLs</li>
+                            <li class="list-group-item">Detailed Analytics</li>
+                            <li class="list-group-item">Higher URL Limit</li>
+                            <li class="list-group-item">Ad-Free Experience</li>
+                            <li class="list-group-item">Priority Support</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h4 class="card-title">Get Premium Today</h4>
+                        <p class="card-text">For only $1.99/month, you can enjoy all the premium features without any limitations.</p>
+                        <a href="#" class="btn btn-primary" id="upgrade-button">Upgrade Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+    // Wait for the DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function () {
+        // Ensure the button with the ID 'upgrade-button' is loaded
+        var upgradeButton = document.getElementById('upgrade-button');
+        if (upgradeButton) {
+            upgradeButton.addEventListener('click', function () {
+                // Redirect to the create-checkout-session route on your server
+                window.location.href = "/create-checkout-session";
+            });
+        } else {
+            console.error('Upgrade button not found');
+        }
+    });
+    </script>
+</body>
+</html>
