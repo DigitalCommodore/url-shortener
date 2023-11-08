@@ -14,6 +14,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
 def create_db():
     conn = sqlite3.connect('url_shortener.db')
     conn.row_factory = sqlite3.Row
@@ -43,9 +44,11 @@ def create_db():
     conn.commit()
     conn.close()
 
+
 def init_db():
     with app.app_context():
         create_db()
+
 
 def short_url_exists(short_url):
     conn = sqlite3.connect(db_filename)
@@ -54,6 +57,7 @@ def short_url_exists(short_url):
     row = c.fetchone()
     conn.close()
     return row is not None
+
 
 def insert_url_mapping(long_url, user_id):
     conn = sqlite3.connect(db_filename)
@@ -108,6 +112,7 @@ def redirect_to_long_url(short_url):
         return redirect(long_url)
     conn.close()
     return 'URL not found', 404
+
 
 @app.route('/my_shortlinks')
 @login_required
@@ -240,6 +245,7 @@ def cancelled():
     # Redirect to the homepage
     return redirect(url_for('home'))
 
+
 class User(UserMixin):
     def __init__(self, id, username, password, email, is_premium):
         self.id = id
@@ -247,7 +253,6 @@ class User(UserMixin):
         self.password = password
         self.email = email
         self.is_premium = is_premium
-
 
 
 @login_manager.user_loader
@@ -261,6 +266,7 @@ def load_user(user_id):
     if user:
         return User(str(user['id']), user['username'], user['password'], user['email'], user['is_premium'])
     return None
+
 
 if __name__ == '__main__':
     init_db()
